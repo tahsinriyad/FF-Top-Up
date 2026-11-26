@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Login</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;display:grid;place-items:center;padding:16px;font-family:system-ui,-apple-system,"Hind Siliguri",sans-serif;background:linear-gradient(160deg,#e8f0ff,#fff);color:#111827}
+.box{width:min(100%,380px);background:#fff;border:1.5px solid #111827;border-radius:22px;box-shadow:0 5px 0 #111827;padding:30px 22px;text-align:center}
+.logo{max-width:150px;max-height:70px;border-radius:10px}
+h1{font-size:22px;margin:16px 0 6px}
+p{font-size:14px;color:#64748b;line-height:1.7}
+.g{display:flex;align-items:center;justify-content:center;gap:10px;height:50px;margin-top:14px;border-radius:14px;border:1.5px solid #bcd0fb;background:#fff;color:#111827;font-weight:700;font-size:15px;text-decoration:none}
+.g.main{background:linear-gradient(135deg,#3b82f6,#1d4ed8);border:0;color:#fff;margin-top:22px}
+.g b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#fff;color:#1d4ed8;border:1px solid #c9daff}
+.err{display:none;margin-top:16px;padding:12px;border-radius:12px;background:#fef3f2;border:1px solid #fecdca;color:#b42318;font-size:13.5px}
+.back{display:inline-block;margin-top:20px;font-size:13px;color:#2563eb;text-decoration:none}
+</style>
+</head>
+<body>
+<main class="box">
+  <img class="logo" src="{{LOGO}}" alt="Logo">
+  <h1 id="siteName">{{SITE_NAME}}</h1>
+  <p>রেজিস্ট্রেশন বা লগইন করতে নিচের বাটনে ক্লিক করুন</p>
+  <div class="err" id="err" role="alert"></div>
+  <a class="g main" href="/auth/google"><b>G</b>Enter with Google</a>
+  <a class="back" href="/">← হোমে ফিরে যান</a>
+</main>
+<script src="/account.js"></script>
+<script>
+(function(){
+  var h=document.getElementById('siteName');
+  if(!h.textContent.trim()) h.textContent=(typeof website_name!=='undefined'&&website_name)||'Login';
+  var e=new URLSearchParams(location.search).get('error');
+  if(!e) return;
+  var box=document.getElementById('err');
+  box.textContent=e==='config'?'Google login এখনো সেট করা হয়নি।':'লগইন করা যায়নি, আবার চেষ্টা করুন।';
+  box.style.display='block';
+})();
+</script>
+</body>
+</html>

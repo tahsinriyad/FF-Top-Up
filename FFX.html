@@ -12,6 +12,7 @@
 <link rel="apple-touch-icon" href="Main logo.jpg">
 <meta property="og:image" content="Main logo.jpg">
 <title>Nickname</title>
+<script src="/auth/me.js"></script>
 <script>
 // =======================================================
 // INSTANT CONFIG LOADER & CACHE-BUSTER (Render Live Update)
@@ -2009,12 +2010,16 @@ setInterval(fetchFreshAccountConfig, 15000);
     email: '',                // যেমন: 'eacin69x@gmail.com'
     avatar: ''                // প্রোফাইল ছবির লিংক (ফাঁকা থাকলে ডিফল্ট আইকন)
   };
-  var LOGIN_URL = '#';
-  var LOGOUT_URL = '#';
+  var LOGIN_URL = '/login';
+  var LOGOUT_URL = '/auth/logout';
 
   var panel = document.getElementById('accPanel');
   var navLinks = [].slice.call(document.querySelectorAll('nav.nav a'));
   var navHome = navLinks[0], navAcc = navLinks[4];
+
+  if (window.__USER && window.__USER.loggedIn) {
+    USER.loggedIn = true; USER.name = window.__USER.name; USER.email = window.__USER.email; USER.avatar = window.__USER.avatar;
+  }
 
   // ইউজার তথ্য বসানো
   (function render(){
@@ -2091,8 +2096,8 @@ setInterval(fetchFreshAccountConfig, 15000);
 // ==========================================
 (function(){
   // লগইন সিস্টেম যুক্ত করলে এটা true করে দিন
-  var isLoggedIn=false;
-  var LOGIN_URL='#';
+  var isLoggedIn=!!(window.__USER&&window.__USER.loggedIn);
+  var LOGIN_URL='/login';
 
   var home=document.getElementById('homeView'), ff=document.getElementById('ffView'), foot=document.getElementById('siteFooter');
   var sel={name:'',price:0,pay:'Wallet Pay'};
@@ -2165,8 +2170,8 @@ setInterval(fetchFreshAccountConfig, 15000);
 // ==========================================
 (function(){
   // লগইন সিস্টেম যুক্ত করলে এটা true করে দিন
-  var isLoggedIn=false;
-  var LOGIN_URL='#';
+  var isLoggedIn=!!(window.__USER&&window.__USER.loggedIn);
+  var LOGIN_URL='/login';
 
   var BALANCE=0;          // ইউজারের ওয়ালেট ব্যালেন্স (ব্যাকএন্ড থেকে বসান)
   var HOWTO_URL='#';      // "কিভাবে অর্ডার করবেন?" ভিডিও/গাইডের লিংক
@@ -2248,8 +2253,8 @@ setInterval(fetchFreshAccountConfig, 15000);
 // ==========================================
 (function(){
   // লগইন সিস্টেম যুক্ত করলে এটা true করে দিন
-  var isLoggedIn=false;
-  var LOGIN_URL='#';
+  var isLoggedIn=!!(window.__USER&&window.__USER.loggedIn);
+  var LOGIN_URL='/login';
 
   var BALANCE=0;          // ইউজারের ওয়ালেট ব্যালেন্স (ব্যাকএন্ড থেকে বসান)
   var HOWTO_URL='#';      // "কিভাবে অর্ডার করবেন?" ভিডিও/গাইডের লিংক
@@ -2331,8 +2336,8 @@ setInterval(fetchFreshAccountConfig, 15000);
 // ==========================================
 (function(){
   // লগইন সিস্টেম যুক্ত করলে এটা true করে দিন
-  var isLoggedIn=false;
-  var LOGIN_URL='#';
+  var isLoggedIn=!!(window.__USER&&window.__USER.loggedIn);
+  var LOGIN_URL='/login';
 
   var BALANCE=0;          // ইউজারের ওয়ালেট ব্যালেন্স (ব্যাকএন্ড থেকে বসান)
   var HOWTO_URL='#';      // "কিভাবে অর্ডার করবেন?" ভিডিও/গাইডের লিংক
@@ -2414,8 +2419,8 @@ setInterval(fetchFreshAccountConfig, 15000);
 // ==========================================
 (function(){
   // লগইন সিস্টেম যুক্ত করলে এটা true করে দিন
-  var isLoggedIn=false;
-  var LOGIN_URL='#';
+  var isLoggedIn=!!(window.__USER&&window.__USER.loggedIn);
+  var LOGIN_URL='/login';
 
   var BALANCE=0;          // ইউজারের ওয়ালেট ব্যালেন্স (ব্যাকএন্ড থেকে বসান)
   var HOWTO_URL='#';      // "কিভাবে অর্ডার করবেন?" ভিডিও/গাইডের লিংক
@@ -2497,8 +2502,8 @@ setInterval(fetchFreshAccountConfig, 15000);
 // ==========================================
 (function(){
   // লগইন সিস্টেম যুক্ত করলে এটা true করে দিন
-  var isLoggedIn=false;
-  var LOGIN_URL='#';
+  var isLoggedIn=!!(window.__USER&&window.__USER.loggedIn);
+  var LOGIN_URL='/login';
 
   var BALANCE=0;          // ইউজারের ওয়ালেট ব্যালেন্স (ব্যাকএন্ড থেকে বসান)
   var HOWTO_URL='#';      // "কিভাবে অর্ডার করবেন?" ভিডিও/গাইডের লিংক
@@ -2725,7 +2730,7 @@ setInterval(fetchFreshAccountConfig, 15000);
       var small=document.querySelector('#avBtn .av-inner'); if(small){ small.innerHTML=''; var i2=document.createElement('img'); i2.src=p.avatar; i2.alt='Profile'; i2.style.cssText='width:100%;height:100%;border-radius:50%;object-fit:cover'; small.appendChild(i2); }
     }
   };
-  window.setProfile({});
+  window.setProfile(window.__USER||{});
 
   $('acRf').onclick=function(){
     var b=this; b.classList.remove('spin'); void b.offsetWidth; b.classList.add('spin');
